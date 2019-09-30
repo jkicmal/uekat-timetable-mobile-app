@@ -15,14 +15,21 @@
         "extensions": [".js", ".jsx"]
       }
     ],
-    "prettier/prettier": [
-      "error",
-      {
-        "trailingComma": "es5",
-        "singleQuote": true,
-        "printWidth": 100
-      }
-    ]
+    "no-use-before-define": "off",
+    "react/prop-types": "off",
+    "comma-dangle": "off",
+    "quotes": [2, "double", { "avoidEscape": true }],
+    "arrow-parens": "off",
+    "react/prefer-stateless-function": "off",
+    "react/state-in-constructor": "off",
+    "camelcase": ["off", { "ignoreDestructuring": true }],
+    "object-curly-newline": "off",
+    "import/prefer-default-export": "off",
+    "react/jsx-no-bind": "off",
+    "react/destructuring-assignment": "off",
+    "global-require": "off",
+    "implicit-arrow-linebreak": "off",
+    "react/no-unused-state": "off"
   },
   "plugins": ["prettier"]
 }

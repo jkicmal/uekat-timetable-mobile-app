@@ -1,24 +1,25 @@
 import React from "react";
 import styled from "styled-components";
+import { DaysView } from "./views";
 
-export const AppContentRenderer = ({ currentNavElement, children }) => {
-  return (
-    <MainContainer>{renderView(currentNavElement, children)}</MainContainer>
-  );
+export const AppContentRenderer = props => {
+  const { currentNavElement } = props;
+  return <MainContainer>{renderView(currentNavElement)}</MainContainer>;
 };
 
-const renderView = (currentNavElement, children) => {
+const renderView = currentNavElement => {
   switch (currentNavElement.label) {
     case "Calendar":
-      return <Container>{children}</Container>;
+      return <DaysView />;
     case "Refresh":
-      return <Container>{children}</Container>;
+      return <DaysView />;
     case "About":
-      return <Container>{children}</Container>;
+      return <DaysView />;
     default:
-      return <Container>{children}</Container>;
+      return <DaysView />;
   }
 };
 
-const MainContainer = styled.View``;
-const Container = styled.View``;
+const MainContainer = styled.View`
+  flex: 1;
+`;

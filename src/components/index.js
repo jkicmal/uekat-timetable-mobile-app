@@ -1,4 +1,4 @@
 export * from "./Header";
-export * from "./AppView";
+export * from "./views/AppView";
 export * from "./AppContentRenderer";
 export { Nav } from "./Nav";

@@ -29,7 +29,8 @@
     "react/destructuring-assignment": "off",
     "global-require": "off",
     "implicit-arrow-linebreak": "off",
-    "react/no-unused-state": "off"
+    "react/no-unused-state": "off",
+    "class-methods-use-this": "off"
   },
   "plugins": ["prettier"]
 }

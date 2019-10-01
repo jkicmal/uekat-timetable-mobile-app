@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { Header, Nav, AppView } from "./components";
+import { Header, Nav, AppContentRenderer } from "./components";
 
 class App extends React.Component {
   state = {
@@ -11,7 +11,7 @@ class App extends React.Component {
       { label: "Refresh", icon: "#" },
       { label: "About", icon: "#" },
     ],
-    currentNavElement: {},
+    currentNavElement: { label: "Days", icon: "#" },
   };
 
   componentDidMount() {
@@ -32,7 +32,7 @@ class App extends React.Component {
 
         {/* Main View */}
         {/*  currentNavLabel={currentNavElement.label} */}
-        <AppView currentNavElement={currentNavElement} />
+        <AppContentRenderer currentNavElement={this.state.currentNavElement} />
 
         {/* Navigation */}
         <Nav

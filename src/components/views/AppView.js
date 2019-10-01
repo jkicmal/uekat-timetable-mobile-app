@@ -4,19 +4,21 @@ import styled from "styled-components";
 
 export const AppView = ({ children }) => {
   return (
-    <Container>
+    <MainContainer>
       <ScrollView>
-        <TestText>{children}</TestText>
+        <Container>
+          <TestText>LUL</TestText>
+        </Container>
       </ScrollView>
-    </Container>
+    </MainContainer>
   );
 };
 
-const TestText = styled.Text`
-  font-size: 50px;
-`;
-
-const Container = styled.View`
+const MainContainer = styled.View`
   flex: 1;
   background-color: greenyellow;
+  height: 500px;
 `;
+
+const Container = styled.View``;
+const TestText = styled.Text``;

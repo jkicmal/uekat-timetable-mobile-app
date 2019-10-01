@@ -1,8 +1,7 @@
 import React from "react";
-import { View } from "react-native";
-// import styled from "styled-components";
+import styled from "styled-components";
 
-import { Header, Nav } from "./components";
+import { Header, Nav, AppView } from "./components";
 
 class App extends React.Component {
   state = {
@@ -15,21 +14,38 @@ class App extends React.Component {
     currentNavElement: {},
   };
 
+  componentDidMount() {
+    const { navElements } = this.state;
+    this.setState({ currentNavElement: navElements[0] });
+  }
+
+  changeView(navElement) {
+    this.setState({ currentNavElement: navElement });
+  }
+
   render() {
     const { navElements, currentNavElement } = this.state;
     return (
-      <View>
+      <Container>
         {/* Header */}
         <Header title={currentNavElement.label} />
 
         {/* Main View */}
-        <View currentNavLabel={currentNavElement.label} />
+        {/*  currentNavLabel={currentNavElement.label} */}
+        <AppView currentNavElement={currentNavElement} />
 
         {/* Navigation */}
-        <Nav navElements={navElements} currentNavElement={currentNavElement} />
-      </View>
+        <Nav
+          navElements={navElements}
+          changeViewFn={this.changeView.bind(this)}
+        />
+      </Container>
     );
   }
 }
 
 export default App;
+
+const Container = styled.View`
+  height: 100%;
+`;

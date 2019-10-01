@@ -9,14 +9,15 @@ export const Header = ({ title }) => (
 );
 
 const Container = styled.View`
+  background-color: blueviolet;
   padding: 5px;
   justify-content: center;
   align-items: center;
   flex: 0 0 50px;
 `;
 
-const Title = styled.View`
+const Title = styled.Text`
   font-family: System;
   font-size: 20px;
-  font-weight: 700px;
+  font-weight: 700;
 `;

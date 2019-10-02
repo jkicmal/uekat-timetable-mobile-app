@@ -1,6 +1,5 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import { getArrayValidIndex } from "../../helpers/arrayHelper";
-import styled from "styled-components";
 
 // 1. Get calendar from API
 /**
@@ -29,7 +28,7 @@ import styled from "styled-components";
 // 4. Render elements
 // 5. Create buttons for next and previous month
 
-export class CalendarView extends Component {
+export class MonthsView extends Component {
   state = {
     months: null,
     currentMonthIndex: 0,
@@ -40,7 +39,7 @@ export class CalendarView extends Component {
   getCalendarDataFromAPI() {
     const months = [{}];
 
-    // TODO: Implement fetching
+    // TODO: Implement fetching and install axios
 
     const currentMonthIndex = this.calculateCurrentMonthIndex(months);
     const nextMonthIndex = getArrayValidIndex(months, currentMonthIndex + 1);

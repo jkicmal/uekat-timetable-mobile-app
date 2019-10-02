@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { DaysView } from "./views";
+import { DaysView } from "./views/DaysView";
 
 export const AppContentRenderer = props => {
   const { currentNavElement } = props;
@@ -10,11 +10,11 @@ export const AppContentRenderer = props => {
 const renderView = currentNavElement => {
   switch (currentNavElement.label) {
     case "Calendar":
-      return <DaysView />;
+      return <EmptyView />;
     case "Refresh":
-      return <DaysView />;
+      return <EmptyView />;
     case "About":
-      return <DaysView />;
+      return <EmptyView />;
     default:
       return <DaysView />;
   }
@@ -23,3 +23,5 @@ const renderView = currentNavElement => {
 const MainContainer = styled.View`
   flex: 1;
 `;
+
+const EmptyView = styled.View``;

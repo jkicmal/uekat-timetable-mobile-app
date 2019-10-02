@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
-import { Header, Nav, AppContentRenderer } from "./components";
+import { Header, Nav } from "./components";
+import { AppContentRenderer } from "./components/AppContentRenderer";
 
 class App extends React.Component {
   state = {

@@ -9,7 +9,7 @@ export const Header = ({ title }) => (
 );
 
 const Container = styled.View`
-  background-color: blueviolet;
+  background-color: #32abd3;
   padding: 5px;
   justify-content: center;
   align-items: center;
@@ -20,4 +20,5 @@ const Title = styled.Text`
   font-family: System;
   font-size: 20px;
   font-weight: 700;
+  color: white;
 `;

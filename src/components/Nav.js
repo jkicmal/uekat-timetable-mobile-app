@@ -31,10 +31,13 @@ const Container = styled.View`
 `;
 
 const Button = styled.TouchableOpacity`
-  background-color: orangered;
+  background-color: white;
   flex: 1;
   justify-content: center;
   align-items: center;
 `;
 
-const Label = styled.Text``;
+const Label = styled.Text`
+  font-weight: 700;
+  font-size: 17px;
+`;

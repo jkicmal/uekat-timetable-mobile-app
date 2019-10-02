@@ -6,9 +6,7 @@ export const AppView = ({ children }) => {
   return (
     <MainContainer>
       <ScrollView>
-        <Container>
-          <TestText>LUL</TestText>
-        </Container>
+        <Container>{children}</Container>
       </ScrollView>
     </MainContainer>
   );
@@ -16,9 +14,10 @@ export const AppView = ({ children }) => {
 
 const MainContainer = styled.View`
   flex: 1;
-  background-color: greenyellow;
-  height: 500px;
+  background-color: #eee;
 `;
 
-const Container = styled.View``;
-const TestText = styled.Text``;
+const Container = styled.View`
+  padding: 10px;
+  position: relative;
+`;

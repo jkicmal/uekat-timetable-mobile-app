@@ -16,7 +16,7 @@ import { getArrayValidIndex } from "../../helpers/arrayHelper";
  *                  startTime: 09:50,
  *                  endTime: 15:20,
  *                  breakTime: 03:20,
- *                  seminary: true
+ *                  seminar: true
  *              }
  *          ]
  *      }

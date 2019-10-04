@@ -5,21 +5,31 @@ import { DayCardHeader } from "./DayCardHeader";
 import { DayCardContent } from "./DayCardContent";
 import { DayCardText } from "./DayCardText";
 
-export const DayCardLesson = () => {
+// TODO: Handle props
+export const DayCardLesson = props => {
+  const {
+    name,
+    startTime,
+    endTime,
+    durationInMins,
+    teacher,
+    location,
+    type,
+  } = props;
   return (
     <DayCard backgroundColor="white">
-      <DayCardHeader title="Programowanie Aplikacji Internetowych" />
+      <DayCardHeader title={name} />
       <DayCardContent>
-        <DayCardText text="Start: 09:50" />
-        <DayCardText text="End: 11:50" />
-        <DayCardText text="Time: 02:00" />
+        <DayCardText text={`Start: ${startTime}`} />
+        <DayCardText text={`End: ${endTime}`} />
+        <DayCardText text={`Time: ${durationInMins}`} />
       </DayCardContent>
       <DayCardContent>
-        <DayCardText text="Teacher: dr Tomasz Staś" />
-        <DayCardText text="Location: A 123" />
+        <DayCardText text={teacher} />
+        <DayCardText text={location} />
       </DayCardContent>
       <DayCardContent>
-        <DayCardText text="Wykład z zaliczeniem" />
+        <DayCardText text={type} />
       </DayCardContent>
     </DayCard>
   );

@@ -2,6 +2,11 @@ import React from "react";
 // TODO: Install this with -S
 import axios from "axios";
 import styled from "styled-components";
+import moment from "moment-timezone";
+import {
+  getTimeFromDateTime,
+  getDayNameFromDate,
+} from "../../helpers/dateHelper";
 import { AppView } from "./AppView";
 import { DayCardSummary } from "../cards/DayCardSummary";
 import { DayCardLesson } from "../cards/DayCardLesson";
@@ -21,46 +26,7 @@ export class DaysView extends React.Component {
   // 3 - Set calculated day to currentDay
   // 4 - Write functions for previous and next button
   state = {
-    daysTest: [
-      {
-        weekDayName: "Monday",
-        date: "2019-10-01",
-        startTime: "08:00",
-        endTime: "15:00",
-        breakMins: 120,
-        lessonsCount: 5,
-        lecutresCount: 3,
-        seminar: true,
-        lessons: [
-          {
-            name: "Programowanie",
-            startTime: "08:00",
-            endTime: "11:50",
-            durationInMins: "120",
-            teacher: "dr Tomasz Staś",
-            location: "A 123",
-            type: "Wykład z zaliczeniem",
-          },
-          {
-            name: "Ekonomia",
-            startTime: "12:00",
-            endTime: "13:50",
-            durationInMins: "120",
-            teacher: "dr Tomasz Staś",
-            location: "A 123",
-            type: "Wykład z zaliczeniem",
-          },
-        ],
-        breaks: [
-          {
-            startTime: "11:50",
-            endTime: "12:50",
-            durationInMins: "60",
-          },
-        ],
-      },
-    ],
-    days: [],
+    days: null,
     currentDayIndex: 0,
     previousDayIndex: -1,
     nextDayIndex: -1,
@@ -69,10 +35,10 @@ export class DaysView extends React.Component {
   async componentDidMount() {
     try {
       // TODO: Get it from env file (api key also)
-      const API_URL = "";
+      const API_URL = "http://10.0.2.2:3000/api/v1/days";
       const results = await axios.get(API_URL);
-      if (results.data) {
-        const days = results.data;
+      if (results.data.data) {
+        const days = results.data.data;
         const currentDayIndex = this.getCurrentDayIndex(days);
         const previousDayIndex = 0;
         const nextDayIndex = 0;
@@ -91,55 +57,72 @@ export class DaysView extends React.Component {
   }
 
   getCurrentDayIndex(days) {
-    // TODO: Do this with moment
-    return 0;
+    let index = 0;
+
+    moment.tz.setDefault("Europe/Warsaw");
+    const currentDate = moment();
+
+    index = days.findIndex(day => {
+      const dayDate = moment(day.date);
+      const isValid = currentDate.isSame(dayDate, "date");
+      return isValid;
+    });
+
+    return index;
   }
 
   renderCards() {
-    const { daysTest, currentDayIndex } = this.state;
+    const { days, currentDayIndex } = this.state;
+    const day = days[currentDayIndex];
+    const { lessons, lessonsBreaks, lessonsCount } = day;
+
+    if (lessonsCount !== 0)
+      return (
+        <View>
+          {this.renderSummaryCard(day)}
+          {this.renderLessonAndBreakCards(lessons, lessonsBreaks)}
+        </View>
+      );
+
+    return null;
+  }
+
+  renderSummaryCard(day) {
     const {
-      weekDayName,
       startTime,
       endTime,
-      breakMins,
+      totalLessonsBreaksTimeInMins,
       lessonsCount,
-      lecutresCount,
+      lecturesCount,
       seminar,
-      lessons,
-      breaks,
-    } = daysTest[currentDayIndex];
+    } = day;
     return (
-      <View>
-        <DayCardSummary
-          weekDayName={weekDayName}
-          startTime={startTime}
-          endTime={endTime}
-          breakMins={breakMins}
-          lessonsCount={lessonsCount}
-          lecutresCount={lecutresCount}
-          seminar={seminar}
-        />
-        {this.renderLessonAndBreakCards(lessons, breaks)}
-        {/* TODO: Render breaks */}
-      </View>
+      <DayCardSummary
+        dayName={getDayNameFromDate(startTime)}
+        startTime={startTime}
+        endTime={endTime}
+        totalLessonsBreaksTimeInMins={totalLessonsBreaksTimeInMins}
+        lessonsCount={lessonsCount}
+        lecturesCount={lecturesCount}
+        seminar={seminar}
+      />
     );
   }
 
   renderLessonCard(lesson) {
     const {
-      name,
       startTime,
       endTime,
       durationInMins,
-      teacher,
       location,
-      type,
+      description,
     } = lesson;
+    const { title, teacher, type } = description;
     return (
       <DayCardLesson
-        name={name}
-        startTime={startTime}
-        endTime={endTime}
+        name={title}
+        startTime={getTimeFromDateTime(startTime)}
+        endTime={getTimeFromDateTime(endTime)}
         durationInMins={durationInMins}
         teacher={teacher}
         location={location}
@@ -152,14 +135,13 @@ export class DaysView extends React.Component {
     const { startTime, endTime, durationInMins } = lessonBreak;
     return (
       <DayCardBreak
-        startTime={startTime}
-        endTime={endTime}
+        startTime={getTimeFromDateTime(startTime)}
+        endTime={getTimeFromDateTime(endTime)}
         durationInMins={durationInMins}
       />
     );
   }
 
-  // FIXME: Max call stack exceeded
   renderLessonAndBreakCards(lessons, lessonsBreaks) {
     const lessonsBreaksLength = lessonsBreaks.length;
     return lessons.map((lesson, index) => {
@@ -175,7 +157,8 @@ export class DaysView extends React.Component {
   }
 
   render() {
-    return <AppView>{this.renderCards()}</AppView>;
+    const { days } = this.state;
+    return <AppView>{days ? this.renderCards() : null}</AppView>;
   }
 }
 

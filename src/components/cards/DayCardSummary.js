@@ -1,5 +1,5 @@
 import React from "react";
-
+import { getTimeFromDateTime } from "../../helpers/dateHelper";
 import { DayCard } from "./DayCard";
 import { DayCardHeader } from "./DayCardHeader";
 import { DayCardContent } from "./DayCardContent";
@@ -11,23 +11,23 @@ export const DayCardSummary = props => {
     dayName,
     startTime,
     endTime,
-    lessonsBreaksDurationInMins,
+    totalLessonsBreaksTimeInMins,
     seminar,
     lessonsCount,
     lecturesCount,
   } = props;
   return (
     <DayCard backgroundColor="white">
-      <DayCardHeader title="Monday" />
+      <DayCardHeader title={dayName} />
       <DayCardContent>
-        <DayCardText text="Start: 08:00" />
-        <DayCardText text="End: 15:00" />
-        <DayCardText text="Break Mins: 120" />
+        <DayCardText text={`Start: ${getTimeFromDateTime(startTime)}`} />
+        <DayCardText text={`End: ${getTimeFromDateTime(endTime)}`} />
+        <DayCardText text={`Break Mins: ${totalLessonsBreaksTimeInMins}`} />
       </DayCardContent>
       <DayCardContent>
-        <DayCardText text="Seminar: yes" />
-        <DayCardText text="Lessons: 5" />
-        <DayCardText text="Lectures: 3" />
+        <DayCardText text={`Seminar: ${seminar}`} />
+        <DayCardText text={`Lessons: ${lessonsCount}`} />
+        <DayCardText text={`Lectures: ${lecturesCount}`} />
       </DayCardContent>
     </DayCard>
   );

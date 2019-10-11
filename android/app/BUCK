@@ -35,12 +35,12 @@ android_library(
 
 android_build_config(
     name = "build_config",
-    package = "com.uekatowiceschedulermobileapp",
+    package = "com.uekattimetablemobileapp",
 )
 
 android_resource(
     name = "res",
-    package = "com.uekatowiceschedulermobileapp",
+    package = "com.uekattimetablemobileapp",
     res = "src/main/res",
 )
 

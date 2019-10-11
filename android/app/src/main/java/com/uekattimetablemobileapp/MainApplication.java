@@ -1,4 +1,4 @@
-package com.uekatowiceschedulermobileapp;
+package com.uekattimetablemobileapp;
 
 import android.app.Application;
 import android.content.Context;

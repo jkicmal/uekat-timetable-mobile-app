@@ -128,7 +128,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.uekatowiceschedulermobileapp"
+        applicationId "com.uekattimetablemobileapp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

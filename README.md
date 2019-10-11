@@ -1,6 +1,10 @@
-# UE-Katowice-Scheduler-Mobile-APP
+# UE Katowice Timetable Mobile App
 
-## TODO
+## Materials
+
+- [Building release APK](https://dev.to/zilurrane/generate-release-mode-apk-for-react-native-project-to-publish-on-playstore-5f78)
+
+## To do
 
 - Add API key to backend and send it through axios
 - Deploy backend
@@ -11,7 +15,7 @@
 
 ***
 
-## FIXES
+## Fixes
 
 Fix for axios returnig Network Error
 

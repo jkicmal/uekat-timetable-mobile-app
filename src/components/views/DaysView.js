@@ -37,12 +37,12 @@ export class DaysView extends React.Component {
   async componentDidMount() {
     try {
       // TODO: Get it from env file (api key also)
-      const API_URL = "http://10.0.2.2:3000/api/v1/days";
+      // const API_URL = "http://10.0.2.2:3000/api/v1/days";
+      const API_URL = "https://uekat-timetable-api.herokuapp.com/api/v1/days";
+      const API_KEY = "sdnfsdfuih385yn23y823b8sfsduosafp38u28uvnsa8d8";
       this.setState({ loading: true });
       const results = await axios.get(API_URL, {
-        headers: {
-          api_key: "sdnfsdfuih385yn23y823b8sfsduosafp38u28uvnsa8d8",
-        },
+        headers: { api_key: API_KEY },
       });
       if (results.data.data) {
         const days = results.data.data;

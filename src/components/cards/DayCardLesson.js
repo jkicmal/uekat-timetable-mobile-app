@@ -5,7 +5,6 @@ import { DayCardHeader } from "./DayCardHeader";
 import { DayCardContent } from "./DayCardContent";
 import { DayCardText } from "./DayCardText";
 
-// TODO: Handle props
 export const DayCardLesson = props => {
   const {
     name,

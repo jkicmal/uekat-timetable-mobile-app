@@ -11,8 +11,6 @@ const renderView = currentNavElement => {
   switch (currentNavElement.label) {
     case "Calendar":
       return <EmptyView />;
-    case "Refresh":
-      return <EmptyView />;
     case "About":
       return <EmptyView />;
     default:

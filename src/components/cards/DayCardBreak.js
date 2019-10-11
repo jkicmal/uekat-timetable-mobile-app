@@ -4,7 +4,6 @@ import { DayCardContent } from "./DayCardContent";
 import { DayCardText } from "./DayCardText";
 import { DayCard } from "./DayCard";
 
-// TODO: Handle props
 export const DayCardBreak = props => {
   const { startTime, endTime, durationInMins } = props;
   return (

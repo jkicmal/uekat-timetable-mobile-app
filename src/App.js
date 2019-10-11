@@ -9,7 +9,6 @@ class App extends React.Component {
     navElements: [
       { label: "Days", icon: "#" },
       { label: "Calendar", icon: "#" },
-      { label: "Refresh", icon: "#" },
       { label: "About", icon: "#" },
     ],
     currentNavElement: { label: "Days", icon: "#" },

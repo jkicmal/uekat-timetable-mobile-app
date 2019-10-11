@@ -55,8 +55,7 @@ export class MonthsView extends Component {
     });
   }
 
-  calculateCurrentMonthIndex(months) {
-    // TODO:
+  calculateCurrentMonthIndex() {
     // 0. Get current date from moment
     // 1. Set day of this date to 1
     // 2. Loop through months and return index with current month

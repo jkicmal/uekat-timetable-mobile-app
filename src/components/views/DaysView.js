@@ -1,23 +1,24 @@
 import React from "react";
-// TODO: Install this with -S
 import axios from "axios";
 import styled from "styled-components";
 import moment from "moment-timezone";
+import { ActivityIndicator } from "react-native";
 import {
   getTimeFromDateTime,
   getDayNameFromDate,
 } from "../../helpers/dateHelper";
+import {
+  getNextArrayValidIndex,
+  getPrevArrayValidIndex,
+} from "../../helpers/arrayHelper";
 import { AppView } from "./AppView";
 import { DayCardSummary } from "../cards/DayCardSummary";
 import { DayCardLesson } from "../cards/DayCardLesson";
 import { DayCardBreak } from "../cards/DayCardBreak";
-
-// TODO: Days navigation
-// <PrevButton> SELECTED_DAY_DATE <NextButton>
-// nextValidIndex and previousValudIndex
-// If next or prev index is -1 don't render buttons
+import { DaysViewNav } from "../navs/DaysViewNav";
 
 // TODO: Rename Nav to MainNav
+// TODO: Consider sending start and end times as HH:mm
 
 export class DaysView extends React.Component {
   // 0 - Render loader
@@ -28,24 +29,30 @@ export class DaysView extends React.Component {
   state = {
     days: null,
     currentDayIndex: 0,
-    previousDayIndex: -1,
+    prevDayIndex: -1,
     nextDayIndex: -1,
+    loading: false,
   };
 
   async componentDidMount() {
     try {
       // TODO: Get it from env file (api key also)
       const API_URL = "http://10.0.2.2:3000/api/v1/days";
-      const results = await axios.get(API_URL);
+      this.setState({ loading: true });
+      const results = await axios.get(API_URL, {
+        headers: {
+          api_key: "sdnfsdfuih385yn23y823b8sfsduosafp38u28uvnsa8d8",
+        },
+      });
       if (results.data.data) {
         const days = results.data.data;
         const currentDayIndex = this.getCurrentDayIndex(days);
-        const previousDayIndex = 0;
-        const nextDayIndex = 0;
+        const prevDayIndex = getPrevArrayValidIndex(days, currentDayIndex);
+        const nextDayIndex = getNextArrayValidIndex(days, currentDayIndex);
         this.setState({
           days,
           currentDayIndex,
-          previousDayIndex,
+          prevDayIndex,
           nextDayIndex,
         });
       } else {
@@ -53,22 +60,32 @@ export class DaysView extends React.Component {
       }
     } catch (err) {
       // UNHANDLED ERROR: Couldn't connect with API
+    } finally {
+      this.setState({ loading: false });
     }
   }
 
   getCurrentDayIndex(days) {
-    let index = 0;
-
     moment.tz.setDefault("Europe/Warsaw");
     const currentDate = moment();
 
-    index = days.findIndex(day => {
+    return days.findIndex(day => {
       const dayDate = moment(day.date);
       const isValid = currentDate.isSame(dayDate, "date");
       return isValid;
     });
+  }
 
-    return index;
+  getCurrentDay() {
+    const { days, currentDayIndex } = this.state;
+    return days ? days[currentDayIndex] : null;
+  }
+
+  setCurrentDayIndex(index) {
+    const { days } = this.state;
+    const prevDayIndex = getPrevArrayValidIndex(days, index);
+    const nextDayIndex = getNextArrayValidIndex(days, index);
+    this.setState({ currentDayIndex: index, prevDayIndex, nextDayIndex });
   }
 
   renderCards() {
@@ -76,6 +93,7 @@ export class DaysView extends React.Component {
     const day = days[currentDayIndex];
     const { lessons, lessonsBreaks, lessonsCount } = day;
 
+    // If there is no lesson do not render anything
     if (lessonsCount !== 0)
       return (
         <View>
@@ -157,9 +175,33 @@ export class DaysView extends React.Component {
   }
 
   render() {
-    const { days } = this.state;
-    return <AppView>{days ? this.renderCards() : null}</AppView>;
+    const { days, prevDayIndex, nextDayIndex, loading } = this.state;
+    const currentDay = this.getCurrentDay();
+    if (loading)
+      return (
+        <LoaderContainer>
+          <ActivityIndicator size="large" />
+        </LoaderContainer>
+      );
+    return (
+      <AppView>
+        <DaysViewNav
+          date={currentDay ? currentDay.date : ""}
+          prevDayIndex={prevDayIndex}
+          nextDayIndex={nextDayIndex}
+          setCurrentDayIndexFn={this.setCurrentDayIndex.bind(this)}
+        />
+        {days ? this.renderCards() : null}
+      </AppView>
+    );
   }
 }
 
 const View = styled.View``;
+const LoaderContainer = styled.View`
+  width: 100%;
+  height: 100%;
+  align-self: stretch;
+  align-items: center;
+  justify-content: center;
+`;
